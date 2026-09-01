@@ -1,0 +1,8 @@
+{
+  "name": "حاسبة الهاون التكتيكية",
+  "description": "منظومة تكتيكية متطورة لحساب رماية مدافع الهاون وتوجيه النيران وإدارة جداول الذخائر والحشوات بدون إنترنت",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
