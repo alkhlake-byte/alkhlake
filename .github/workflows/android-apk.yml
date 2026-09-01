@@ -25,6 +25,33 @@ jobs:
       - name: Build web application
         run: npm run build
 
+      - name: Verify web build
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Error: dist directory was not created."
+            exit 1
+          fi
+          ls -la dist
+
+      - name: Verify Capacitor configuration
+        run: |
+          if [ ! -f "capacitor.config.json" ]; then
+            echo "capacitor.config.json not found. Creating it..."
+            cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.alkhlake.mortar",
+            "appName": "الرماية بالهاون",
+            "webDir": "dist"
+          }
+          EOF
+          fi
+
+          echo "Capacitor configuration:"
+          cat capacitor.config.json
+
+      - name: Check Capacitor CLI
+        run: npx cap --version
+
       - name: Add Android platform
         run: npx cap add android
 
@@ -35,7 +62,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
           cache: gradle
 
       - name: Setup Android SDK
