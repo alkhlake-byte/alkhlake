@@ -25,8 +25,21 @@ jobs:
       - name: Build web application
         run: npm run build
 
-      - name: Install Capacitor CLI
-        run: npm install --save-dev @capacitor/cli
+      - name: Install Capacitor packages
+        run: |
+          npm install @capacitor/core
+          npm install --save-dev @capacitor/cli
+          npm install @capacitor/android
+
+      - name: Create Capacitor config
+        run: |
+          cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.alkhlake.mortar",
+            "appName": "الرماية بالهاون",
+            "webDir": "dist"
+          }
+          EOF
 
       - name: Check Capacitor
         run: npx cap --version
@@ -34,32 +47,6 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
-      - name: Sync Capacitor
-        run: npx cap sync android
-
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '17'
-          cache: gradle
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Grant Gradle permission
-        run: chmod +x android/gradlew
-
-      - name: Build Debug APK
-        working-directory: android
-        run: ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
       - name: Sync Capacitor
         run: npx cap sync android
 
