@@ -25,25 +25,6 @@ jobs:
       - name: Build web application
         run: npm run build
 
-      - name: Install Capacitor packages
-        run: |
-          npm install @capacitor/core
-          npm install --save-dev @capacitor/cli
-          npm install @capacitor/android
-
-      - name: Create Capacitor config
-        run: |
-          cat > capacitor.config.json <<'EOF'
-          {
-            "appId": "com.alkhlake.mortar",
-            "appName": "الرماية بالهاون",
-            "webDir": "dist"
-          }
-          EOF
-
-      - name: Check Capacitor
-        run: npx cap --version
-
       - name: Add Android platform
         run: npx cap add android
 
